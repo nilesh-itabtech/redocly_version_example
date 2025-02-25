@@ -1,0 +1,12 @@
+apis:
+  v1:
+    root: ./openapi-v1.yaml
+  v2:
+    root: ./openapi-v2.yaml
+
+rules:
+  operation-operationId: error  # Ensures each operation has an operationId
+  info-contact: warn  # Warns if 'contact' is missing in the 'info' section
+  boolean-parameter-prefixes:
+    severity: error
+    prefixes: ['can', 'is', 'has']  # Ensures boolean names follow conventions

@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Trading API
+  description: API for trading operations
+  version: 2.0.0
+  contact:  # Added contact field
+    name: API Support
+    email: support@yourdomain.com
+    url: "https://yourdomain.com/support"
+  license:  #Add this section
+    name: MIT
+    url: "https://opensource.org/licenses/MIT"
+servers:
+  - url: https://api.yourdomain.com
+    description: Production server
+components:
+  securitySchemes:
+    BearerAuth:  #Define the security scheme here
+      type: http
+      scheme: bearer
+      bearerFormat: JWT  # Optional but recommended
+paths:
+  /v2/trades:  #Versioned path
+    get:
+      summary: Get all trades
+      operationId: getTrades
+      parameters:
+        - name: X-Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for tracking API requests across services.
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "trade_123"
+                    symbol:
+                      type: string
+                      example: "AAPL"
+                    quantity:
+                      type: number
+                      example: 10
+        "400":
+          description: Bad Request Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid request parameters."
+
